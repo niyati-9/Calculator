@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niyati's Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #3d2976; 
+            color: #fff;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .calculator {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .display {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: right;
+            font-size: 2em;
+            min-height: 60px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        .operator {
+            background: rgba(250, 163, 2, 0.5);
+        }
+        .equals {
+            background: rgba(3, 171, 3, 0.5);
+            grid-column: span 2;
+            border-radius: 25px;
+        }
+        .clear {
+            background: rgba(239, 4, 4, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Niyati's Calculator</h1>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="clear">C</button>
+            <button onclick="appendToDisplay('(')">(</button>
+            <button onclick="appendToDisplay(')')">)</button>
+            <button onclick="appendToDisplay('/')" class="operator">÷</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('*')" class="operator">×</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')" class="operator">-</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('+')" class="operator">+</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate()" class="equals">=</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let currentValue = '0';
+
+        function updateDisplay() {
+            display.textContent = currentValue;
+        }
+
+        function appendToDisplay(value) {
+            if (currentValue === '0' && value !== '.') {
+                currentValue = value;
+            } else {
+                currentValue += value;
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentValue = '0';
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                currentValue = eval(currentValue).toString();
+                updateDisplay();
+            } catch (error) {
+                currentValue = 'Error';
+                updateDisplay();
+                setTimeout(clearDisplay, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
